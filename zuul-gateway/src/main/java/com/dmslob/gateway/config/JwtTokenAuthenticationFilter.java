@@ -19,6 +19,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtConfig jwtConfig;
 
     public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {

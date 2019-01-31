@@ -44,6 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // If user not found. Throw this exception.
         throw new UsernameNotFoundException("Username: " + username + " not found");
     }
+
     // A (temporary) class represent the user saved in the database.
     private static class AppUser {
         private Integer id;

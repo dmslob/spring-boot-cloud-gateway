@@ -3,6 +3,7 @@ package com.dmslob.galleryservice.model;
 import java.util.List;
 
 public class Gallery {
+
     private long id;
     private List<Object> images;
 

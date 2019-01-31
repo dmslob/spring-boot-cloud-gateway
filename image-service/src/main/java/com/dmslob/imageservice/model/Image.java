@@ -1,6 +1,7 @@
 package com.dmslob.imageservice.model;
 
 public class Image {
+
     private long id;
     private String title;
     private String url;
