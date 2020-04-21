@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 // This class acts like a provider for the user; meaning it loads the user from the database (or any data source).
-// It doesn’t do authentication. It just loads the user given his username.
+// It doesn't do authentication. It just loads the user given his username.
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -29,6 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 new AppUser(1, "omar", encoder.encode("12345"), "USER"),
                 new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
         );
+
         for (AppUser appUser : users) {
             if (appUser.getUsername().equals(username)) {
                 // Remember that Spring needs roles to be in this format: "ROLE_" + userRole (i.e. "ROLE_ADMIN")
@@ -41,7 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 return new User(appUser.getUsername(), appUser.getPassword(), grantedAuthorities);
             }
         }
-        // If user not found. Throw this exception.
         throw new UsernameNotFoundException("Username: " + username + " not found");
     }
 

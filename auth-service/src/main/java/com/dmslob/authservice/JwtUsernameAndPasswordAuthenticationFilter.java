@@ -23,10 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-// It’s used to validate user credentials, and generate tokens.
+// It's used to validate user credentials, and generate tokens.
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    // We use auth manager to validate the user credentials
     private AuthenticationManager authManager;
 
     private final JwtConfig jwtConfig;
@@ -43,19 +42,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-
         try {
-
             // 1. Get credentials from request
             UserCredentials creds = new ObjectMapper().readValue(request.getInputStream(), UserCredentials.class);
-
             // 2. Create auth object (contains credentials) which will be used by auth manager
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     creds.getUsername(), creds.getPassword(), Collections.emptyList());
-
             // 3. Authentication manager authenticate the user, and use UserDetialsServiceImpl::loadUserByUsername() method to load the user.
             return authManager.authenticate(authToken);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +73,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
 
-        // Add token to header
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
     }
 
